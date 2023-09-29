@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap');
+        * {
+            padding: 0;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            color: #000;
+        }
+        
+        .container {
+            background-color: rgb(255, 255, 255);
+            width: 90%;
+            min-width: 400px;
+            max-width: 1080px;
+            height: 90%;
+            min-height: 200px;
+            max-height: 600px;
+            padding: 35px;
+            
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            
+            border-radius: 25px;
+            box-shadow: 0px 0px 10px 3px rgba(100, 7, 239, 0.3);
+            
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .tab-box {
+            height: 35px;
+            display: flex;
+            flex-direction: row;
+            margin-bottom: 5px;
+        }
+        
+        hr {
+            height: 1px;
+            background-color: rgba(100, 7, 239, 1);
+            border: none;
+            border-radius: 7px;
+            margin-bottom: 5px;
+        }
+        
+        .tab-btn {
+            border: none;
+            background-color: rgba(0, 0, 0, 0);
+            margin-right: 30px;
+            border-radius: 15px;
+            padding: 0px 10px;
+            font-size: 1em;
+            min-width: 50px;
+            
+            font-weight: 500;
+            color: #b4b4b4f3;
+        }
+        
+        .tab-btn:first-child {
+            margin-left: 15px;
+        }
+        
+        .tab-btn:hover {
+            background-color: rgba(100, 7, 239, 1);
+            color: #fff;
+        }
+        
+        .active {
+            color: rgba(100, 7, 239, 1);
+        }
+        
+        .tab-content {
+            padding: 19px;
+            height: 100%;
+            width: 100%;
+            box-sizing: border-box;
+            display: none;
+        }
+        
+        .displayed {
+            display: block;
+        }
+        
+        .credit {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        span {
+            color: rgba(100, 7, 239, 1);
+        }
+        
+        p {
+            display: inline;
+        }
+        
+        .content{
+            display: flex;
+            max-height: 100%;
+            height: 100%;
+            min-height: 450px;
+        }
+
+        .menu {
+            width: 25%;
+            min-width: 215px;
+        }
+
+        #input {
+            width: 75%;
+            max-width: 100%;
+            max-height: 100%;
+            margin-left: 10px;
+            padding: 0 10px;
+            border-left: 0.5px solid lightslategray;
+        }
+
+        @media screen and (max-width: 999px) {
+            .content {
+                flex-direction: column;
+            }
+
+            .menu {
+                width: 100%
+            }
+
+            #input {
+                margin-left: 0;
+                min-width: none;
+                border: none;
+                width: 100%;
+                padding: 0;
+            }
+
+            .ams-input {
+                margin: 0;
+                font-size: small;
+                width: 100%;
+            }
+
+        }
+
+        .ams-input {
+            margin:5px 0;
+            margin-right: 20px;
+        }
+
+        #input #data {
+            display: block;
+            overflow-y: scroll;
+            scroll-behavior: smooth;
+            width: 100%;
+            max-height: 518px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        #input #data::-webkit-scrollbar {
+            display: none;
+        }
+
+        #input #data p {
+            display: block;
+        }
+
+        .menu {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .menu input[type="date"] {
+            padding: 0 10px;
+            border: 0px solid rgba(0, 0, 0, 0);
+        }
+
+        .menu input[type="date"]:focus {
+            outline: none;
+        }
+
+        .menu input[type="date"]:hover {
+            color: rgba(100, 7, 239, 1);
+        }
+
+        .false {
+            color:red;
+        }
+
+        .good {
+            color: green;
+        }
+
+        input[type="button"] {
+            outline: none;
+            border: none;
+            padding: 5px;
+            margin: 1px 0;
+            margin-bottom: 0px;
+            margin-right: 10px;
+            background-color: rgba(0, 0, 0, 0);
+        }
+
+        .ams-input:nth-child(even) {
+            background-color: rgb(222, 222, 222);
+            color: rgba(100, 7, 239, 1);
+        }
+
+        #input .ams-input button {
+            background-color: rgba(0, 0, 0, 0);
+            border: none;
+            color: rgba(100, 7, 239, 1);
+            padding: 0 10px;
+            margin: 0 5px;
+        }
+
+        #input .ams-input button:hover {
+            color: #fff;
+            background-color: rgba(100, 7, 239, 1);
+            border-radius: 15px;
+        }
+
+        input[type="button"]:hover {
+            background-color: rgba(100, 7, 239, 1);
+            color: #fff;
+        }
+
+        input[type="button"] {
+            margin-top: 5px;
+        }
+
+        select {
+            padding: 0 10px;
+            border: 0px solid transparent;
+            max-width: 130px;
+            height: 15px;
+        }
+
+        select:hover{
+            color: rgba(100, 7, 239, 1);
+        }
+
+        select:focus {
+            outline: none;
+        }
+
+        input[type="number"] {
+            max-width: 50px;
+        }
+
+        input[type="number"]:hover {
+            color: rgba(100, 7, 239, 1);
+        }
+
+        input[type="number"]:focus {
+            outline-color: rgba(100, 7, 239, 1);
+        }
+
+    </style>
+    <title>HRTooling</title>
+</head>
+<body>
+    
+    <div class="container">
+        <div class="tab-box">
+            <button class="tab-btn active">AMS</button>
+            <button class="tab-btn">DESERTION</button>
+            <button class="tab-btn">MATRICULE</button>
+        </div>
+        <hr>
+        <div class="tab-content displayed" id="ams">
+            <div class="content">
+                <div class="menu">
+                    <div style="display: flex; flex-direction: column; margin-bottom: 10px;">
+                        <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                            <p>Début: </p>
+                            <input type="date" name="start-date" id="start-date-ams" required>
+                        </div>
+                        <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                            <p>Fin:</p>
+                            <input type="date" name="end-date" id="end-date-ams" required>
+                        </div>
+                        <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                            <p>MTMS:</p>
+                            <input type="checkbox" name="mtms" id="mtms" style="margin-right: 12px;">
+                        </div>
+                        <input type="button" id="add-btn-ams" value="Ajouter">
+                        <hr style="margin-right: 10px;">
+                        <input type="button" id="calculate-btn-ams" value="Calculer">
+                        <hr style="margin-right: 10px;">
+                        <input type="button" id="reset-btn-ams" value="Réinitialiser">
+                        <hr style="margin-right: 10px;">
+                    </div>
+                    <div id="response-ams" style="display: flex; flex-direction: column; margin-top: 10px;">
+                        
+                    </div>
+                </div>
+                <div id="input">
+                    <div id="data-ams"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="desertor">
+            <div class="content">
+                <div class="menu">
+                    <div style="display: flex; flex-direction: column; margin-bottom: 10px;">
+                        <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                            <p>Début: </p>
+                            <input type="date" name="start-date" id="start-date-desertor" required>
+                        </div>
+                        <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                            <p>Catégorie:</p>
+                            <select name="category" id="category-desertor" style="margin-right:12px;">
+                                <option value="">--Sélection--</option>
+                                <option value="Volontaire">Volontaire</option>
+                                <option value="Sous-Officier">Sous-Officier</option>
+                                <option value="Officier">Officier</option>
+                            </select>
+                        </div>
+                        <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                            <p>Type:</p>
+                            <select name="type" id="type-desertor" style="margin-right: 12px;">
+                                <option value="">--Sélection--</option>
+                            </select>
+                        </div>
+                        <input type="button" id="calculate-btn-desertor" value="Calculer">
+                        <hr style="margin-right: 10px;">
+                    </div>
+                </div>
+                <div id="input">
+                    <div id="data-desertor"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="matricule">
+            <div class="content">
+                <div class="menu">
+                    <div style="display: flex; flex-direction: column; margin-bottom: 10px;">
+                        <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                            <p>Début: </p>
+                            <input type="date" name="start-date" id="start-date-matricule" required>
+                        </div>
+                        <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                            <p>Fin:</p>
+                            <input type="date" name="end-date" id="end-date-matricule" required>
+                        </div>
+                        <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                            <p>Type:</p>
+                            <select name="" id="interruption-matricule" style="margin-right: 12px;">
+                                <option value="">--Sélection--</option>
+                                <option value="ncpcsa">Ne Compte Pas Comme Sv Actif</option>
+                                <option value="rtems50">RTEMS 50%</option>
+                                <option value="end-period">Fin de période</option>
+                                <option value="missing">Absent/Manquant/En arrière de rejoindre</option>
+                                <option value="autre">Autre</option>
+                            </select>
+                        </div>
+                        <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                            <p>Durée:</p>
+                            <input type="number" name="duration" id="duration-matricule" style="margin-right: 12px;" disabled>
+                        </div>
+                        <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                            <p>Date:</p>
+                            <input type="date" name="duration" id="reprise-matricule" style="margin-right: 2px;" disabled>
+                        </div>
+                        <input type="button" id="add-btn-matricule" value="Ajouter">
+                        <hr style="margin-right: 10px;">
+                        <input type="button" id="calcul-btn-matricule" value="Calculer">
+                        <hr style="margin-right: 10px;">
+                        <input type="button" id="reset-btn-matricule" value="Réinitialiser">
+                        <hr style="margin-right: 10px;">
+                    </div>
+                    <div id="response-ams" style="display: flex; flex-direction: column; margin-top: 10px;">
+                        
+                    </div>
+                </div>
+                <div id="input">
+                    <div id="data-matricule"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="credit">Credit <span>&</span> Corpyrigth</div>
+    </div>
+
+    <script>
+        let tab_btns = document.querySelectorAll('.tab-btn');
+        let tab_contents = document.querySelectorAll('.tab-content');
+
+        tab_btns.forEach((btn, index) => {
+            btn.addEventListener("click", (e) => {
+                tab_btns.forEach( btn => {btn.classList.remove("active")});
+                btn.classList.add("active");
+
+                tab_contents.forEach(content => {content.classList.remove("displayed")})
+                tab_contents[index].classList.add("displayed");
+            });
+        });
+
+        // AMS
+
+        const start_date_input = document.querySelector("#start-date-ams"); 
+        const end_date_input = document.querySelector("#end-date-ams"); 
+        const add_btn = document.querySelector("#add-btn-ams");
+        const calculate_btn = document.querySelector("#calculate-btn-ams");
+        const reset_btn = document.querySelector("#reset-btn-ams");
+        const input_data = document.querySelector("#data-ams");
+        const response_data = document.querySelector("#response-ams");
+        const mtms_checkbox = document.querySelector("#mtms");
+        let AMSCollection = [];
+
+        start_date_input.addEventListener("change", (e) => {
+
+            if (start_date_input.value === "" || end_date_input.value === "") {
+                start_date_input.classList.remove("good");
+                end_date_input.classList.remove("good");
+                start_date_input.classList.remove("false");
+                end_date_input.classList.remove("false");
+                return;
+            }
+
+            if (new Date(end_date_input.value).getTime() < new Date(start_date_input.value).getTime()) {
+                start_date_input.classList.add("false");
+                end_date_input.classList.add("false");
+                start_date_input.classList.remove("good");
+                end_date_input.classList.remove("good");
+            } else {
+                start_date_input.classList.remove("false");
+                end_date_input.classList.remove("false");
+                start_date_input.classList.add("good");
+                end_date_input.classList.add("good");
+            }
+        });
+
+        end_date_input.addEventListener("change", (e) => {
+
+            if (start_date_input.value === "" || end_date_input.value === "") {
+                start_date_input.classList.remove("good");
+                end_date_input.classList.remove("good");
+                start_date_input.classList.remove("false");
+                end_date_input.classList.remove("false");
+                return;
+            }
+
+            if (new Date(end_date_input.value).getTime() < new Date(start_date_input.value).getTime()) {
+                start_date_input.classList.add("false");
+                end_date_input.classList.add("false");
+                start_date_input.classList.remove("good");
+                end_date_input.classList.remove("good");
+            } else {
+                start_date_input.classList.remove("false");
+                end_date_input.classList.remove("false");
+                start_date_input.classList.add("good");
+                end_date_input.classList.add("good");
+            }
+        });
+
+        add_btn.addEventListener("click", (e) => {
+            // get the data
+            if (start_date_input.value === "" ) {
+                alert("empty date start");
+                return;
+            }
+            
+            if (end_date_input.value === "" ) {
+                alert("empty date end");
+                return;
+            }
+
+            let start_date = new Date(start_date_input.value);
+            let end_date = new Date(end_date_input.value);
+
+            let mtms = mtms_checkbox.checked;
+
+            // calculate the data
+            let duration = calculAMSDuration(start_date, end_date);
+
+            if (duration < 0) {
+                alert("Invalid duration : " + duration)
+                return;
+            }
+
+            let ams = new AMS(start_date, end_date, duration, mtms);
+
+            AMSCollection.unshift(ams);
+            // expose the results
+
+            refreshData();
+
+            // reset the data
+            start_date_input.value = "";
+            end_date_input.value = "";
+            start_date_input.classList.remove("good");
+            end_date_input.classList.remove("good");
+            mtms_checkbox.checked = false;
+        });
+
+        function calculAMSDuration(start, end) {
+            let diff = end.getTime() - start.getTime();
+            return diff/(1000*60*60*24) + 1;
+        }
+
+        function dateToString(date) {
+            var day = new Date(date).getDate();
+            var month = new Date(date).getMonth() + 1; // Notez que les mois commencent à 0
+            var year = new Date(date).getFullYear();
+            // Ajoutez un zéro devant le jour et le mois si nécessaire
+            if (day < 10) {
+                day = "0" + day;
+            }
+            if (month < 10) {
+                month = "0" + month;
+            }
+            // Créez la chaîne de date au format dd/mm/yyyy
+            var formattedDate = day + "/" + month + "/" + year;
+            return formattedDate;
+        }
+
+        function refreshData() {
+            input_data.innerHTML = "";
+            AMSCollection.forEach((ams, index) => {
+                let duration = ams.mtms ? ams.duration/2 : ams.duration;
+                input_data.innerHTML += `
+                <div class="ams-input" style="padding:5px 0; display:flex; flex-direction:row; justify-content: space-between;">
+                    <div style="margin-left: 5px;">${AMSCollection.length - index}</div>
+                    <div>D: ${dateToString(ams.start)}   </div>       
+                    <div>F: ${dateToString(ams.end)}</div>
+                    <div>${duration} jours</div>
+                    <div>${ams.mtms ? "MTMS" : " AMS"}</div>
+                    <button onClick="onDelete(${ams.key})">Supprimer</button>
+                </div>`;
+            })
+        }
+
+        calculate_btn.addEventListener("click", (e) => {
+            response_data.innerHTML = "";
+            // get the data
+            let d1 = GetD1();
+            response_data.innerHTML += `<p>D1 : ${dateToString(new Date(d1))}</p>`;
+            let d2 = GetD2();
+            response_data.innerHTML += `<p>D2 : ${dateToString(new Date(d2))}</p>`;
+            let d3 = GetD3();
+            response_data.innerHTML += `<p>D3 : ${dateToString(new Date(d3))}</p>`;
+            let sixMonth = GetSixMonth();
+            response_data.innerHTML += `<p>DAMS : ${dateToString(new Date(sixMonth))}</p>`;
+            let d4 = GetD4();
+            response_data.innerHTML += `<p>D4 : ${dateToString(new Date(d4))}</p>`;
+            let d5 = GetD5();
+            response_data.innerHTML += `<p>D5 : ${dateToString(new Date(d5))}</p>`;
+        });
+
+        reset_btn.addEventListener("click", (e) => {
+            // reset the data
+            AMSCollection = [];
+            response_data.innerHTML = "";
+            // reset the input
+            refreshData();
+        });
+
+        function onDelete(key) {
+            AMSCollection = AMSCollection.filter(ams => ams.key !== key);
+            refreshData();
+        }
+
+        function AMS(start, end, duration, mtms) {
+            this.key = Date.now();
+            this.start = start;
+            this.end = end;
+            this.duration = duration;
+            this.mtms = mtms;
+        }
+
+        function GetD1() {
+            return AMSCollection[0].start - 86400000;
+        };
+
+        function GetD2() {
+            let d2 = GetD1() - (86400000 * 212);
+
+            for (let i = 1; i < AMSCollection.length; i++) {
+                const start = AMSCollection[i].start;
+                const end = AMSCollection[i].end;
+                if (end > d2) {
+                    let difference = end - start;
+                    let days = difference/(1000*60*60*24) + 1;
+                    if (AMSCollection[i].mtms) {
+                        days = days/2;
+                    }
+                    d2 -= (86400000 * days);
+                }
+            }
+
+            return d2;
+        };
+
+        function GetD3() {
+            let d3 = new Date(GetD2()); 
+
+            return d3.setMonth(d3.getMonth() + 12);
+        };
+
+        function GetSixMonth() {
+            return GetD3() + 86400000;
+        };
+
+        function GetD4() {
+            let d4 = GetD1() - 86400000 * 365;
+
+            for (let i = 1; i < AMSCollection.length; i++) {
+                const start = AMSCollection[i].start;
+                const end = AMSCollection[i].end;
+                if (end > d4) {
+                    let difference = end - start;
+                    let days = difference/(1000*60*60*24) + 1;
+                    if (AMSCollection[i].mtms) {
+                        days = days/2;
+                    }
+                    d4 -= (86400000 * days);
+                }
+            }
+
+            d4 = new Date(d4).setMonth(new Date(d4).getMonth() + 36);
+
+            return d4;
+        };
+
+        function GetD5() {
+            let d5 = GetD4();
+            d5 = new Date(d5).setMonth(new Date(d5).getMonth() + 36);
+            return d5;
+        };
+
+        // DESERTION
+
+        const category = document.querySelector("#category-desertor");
+        const start_date_desertor = document.querySelector("#start-date-desertor");
+        const type_desertion = document.querySelector("#type-desertor");
+        const calcul_btn_desertor = document.querySelector("#calculate-btn-desertor");
+
+        const officer_options = ["A l'étranger"];
+        const common_options = ["A l'unité",
+                                "Voyagait seul",
+                                "Exempt d'appel",
+                                "Exempt de Sv normal",
+                                "RTE",
+                                "SPMO",
+                                "Absence pour raison médical",
+                                "Exemption pour sportif d'élite",
+                                "Retour d'une mission ordonée", 
+                                "Jour libre 1/2 - 4/5",
+                                "Rappel",
+                                "En arrière de rejoindre",
+                                "En vacances ou congé"];
+
+        category.addEventListener("change", (e) => {
+            cat = category.value;
+            let options = [];
+
+            switch (cat) {
+                case 'Officier':
+                    options = [...officer_options];
+                    options.sort();
+                    options.push("Autre");
+                    break;
+            
+                default:
+                    options = [...common_options];
+                    options.sort();
+                    options.push("Autre");
+                    break;
+            }
+
+            type_desertion.innerHTML = "";
+            const opt = document.createElement("option");
+            opt.value = "";
+            opt.textContent = "--Selection--";
+            type_desertion.appendChild(opt);
+
+            options.forEach(option => {
+                const opt = document.createElement("option");
+                opt.value = option;
+                opt.textContent = option;
+                type_desertion.appendChild(opt);
+            });
+        });
+
+        calcul_btn_desertor.addEventListener("click", (e) => {
+            if (start_date_desertor.value === "") {
+                alert("Please select a date");
+                return;
+            }
+            if (category.value === "") {
+                alert("Please select a category");
+                return;
+            }
+            if (type_desertion.value === "") {
+                alert("Please select a type");
+                return;
+            }
+
+            let cat;
+
+            if (category.value === "Officier") cat = category.value;
+            else cat = "NOfficier";
+
+            let status;
+            let type = type_desertion.value;
+
+            if (cat === "Officier") {
+                switch (type) {
+                    case "A l'étranger": status = "manquant"; break;
+                    default: status = "en arrière de rejoindre"; break;
+                }
+            } else {
+                switch (type) {
+                    case "Rappel": status = "en arrière de rejoindre"; break;
+                    case "En vacances ou congé": status = "en arrière de rejoindre"; break;
+                    case "Autre": status = "en arrière de rejoindre"; break;
+                    default: status = "manquant"; break;
+                }
+            }
+
+            let firstDayGraceDelay = new Date(start_date_desertor.value).setDate(
+                new Date(start_date_desertor.value).getDate() + 1
+            );
+
+            let firstDayDeserter = function () {
+                switch (status) {
+                    case "manquant": 
+                        return (new Date(firstDayGraceDelay).setDate(
+                            new Date(firstDayGraceDelay).getDate() + 8
+                        ));
+                    default:
+                    return (new Date(firstDayGraceDelay).setDate(
+                            new Date(firstDayGraceDelay).getDate() + 15
+                        ));
+                }
+            };
+
+            let firstDayThreeMonth = function () {
+                return (new Date(firstDayGraceDelay).setMonth(
+                    new Date(firstDayGraceDelay).getMonth() + 3
+                ));
+            };
+
+            let mutationDay = function () {
+                let d = firstDayThreeMonth();
+                if (new Date(d).getDate() === 1) {
+                    d = new Date(d).setDate(0);
+                }
+
+                console.log(new Date(d).getMonth())
+
+                switch (new Date(d).getMonth()) {
+                    case 0:
+                        return new Date(new Date(d).setMonth(1)).setDate(1);
+                    case 1:
+                    case 2:
+                    case 3:
+                        return new Date(new Date(d).setMonth(4)).setDate(1);
+                    case 4:
+                    case 5: 
+                    case 6:
+                        return new Date(new Date(d).setMonth(7)).setDate(1);
+                    case 7:
+                    case 8: 
+                    case 9:
+                        return new Date(new Date(d).setMonth(10)).setDate(1);
+                    case 10: 
+                    case 11:
+                        return new Date(d).setFullYear(new Date(d).getFullYear() +1, 1, 1);
+                    default:
+                        break;
+                }
+            };
+
+            const results_desertor = document.querySelector("#data-desertor");
+
+            results_desertor.innerHTML = "";
+            results_desertor.innerHTML += `
+            <div>
+                <p>${dateToString(firstDayGraceDelay)} : ${status}</p><br>
+                <p>${dateToString(firstDayDeserter())} : Déserteur</p><br>
+                <p>${dateToString(firstDayThreeMonth())} : Déserteur plus de 3 mois</p><br>
+                <p>${dateToString(mutationDay())} : Mutation vers Bn QG EM Def NOrg</p><br>
+            </div>
+            `;
+        });
+
+
+
+        // MATRICULE
+
+        const start_date_matricule = document.querySelector('#start-date-matricule');
+        const end_date_matricule = document.querySelector('#end-date-matricule');
+        const type_matricule = document.querySelector('#interruption-matricule');
+        const duration_matricule = document.querySelector('#duration-matricule');
+        const reprise_matricule = document.querySelector('#reprise-matricule');
+        const add_btn_matricule = document.querySelector('#add-btn-matricule');
+        const calcul_btn_matricule = document.querySelector('#calcul-btn-matricule');
+        const reset_btn_matricule = document.querySelector('#reset-btn-matricule');
+        const data_field = document.querySelector('#data-matricule');
+
+        let total_days = 0;
+        let total_months = 0;
+        let total_years = 0;
+
+        let inputs_matricule = [];
+
+        type_matricule.addEventListener('change', () => {
+            reprise_matricule.value = "";
+            duration_matricule.value = "";
+            switch (type_matricule.value) {
+                case "ncpcsa":
+                    reprise_matricule.disabled = true;
+                    duration_matricule.disabled = false;
+                    break;
+                
+                case "rtems50":
+                    duration_matricule.disabled = false;
+                    reprise_matricule.disabled = true;
+                    break;
+
+                case "end":
+                    duration_matricule.disabled = true;
+                    reprise_matricule.disabled = true;
+                    break;
+
+                case "missing":
+                    duration_matricule.disabled = true;
+                    reprise_matricule.disabled = false;
+                    break;
+
+                default:
+                    duration_matricule.disabled = true;
+                    reprise_matricule.disabled = true; 
+                    break;
+            }
+        });
+
+        add_btn_matricule.addEventListener('click', () => {
+            if (start_date_matricule.value === "") {
+                alert('Please enter a date start working period');
+                return;
+            }
+
+            if (end_date_matricule.value === "") {
+                alert('Please enter a date end: as 1st of working interruption');
+                return;
+            }
+
+            if (type_matricule.value === "") {
+                alert('Please enter a type of interruption');
+                return;
+            }
+
+            if (end_date_matricule.value < start_date_matricule.value) {
+                alert('Invalid date');
+                return;
+            }
+
+            // check type of interruption
+            switch (type_matricule.value) {
+                case "ncpcsa":
+                    if (duration_matricule.value === "") {
+                        alert('Please enter a duration of the interruption');
+                        return;
+                    }
+
+                    var duration_value = parseInt(duration_matricule.value);
+                    if (duration_value <= 0) {
+                        alert('Invalid duration');
+                        return;
+                    }
+
+                    updateDuration(start_date_matricule.value, end_date_matricule.value);
+                    total_days += duration_value;
+
+                    start_date_matricule.value = "";
+                    end_date_matricule.value = "";
+                    duration_matricule.value = "";
+                    reprise_matricule.value = "";
+                    type_matricule.value = "";
+
+                    break;
+                
+                case "rtems50":
+                    if (duration_matricule.value === "") {
+                        alert('Please enter a duration of the rtems50');
+                        return;
+                    }
+
+                    var duration_value = parseInt(duration_matricule.value);
+                    if (duration_value <= 0) {
+                        alert('Invalid duration');
+                        return;
+                    }
+
+                    updateDuration(start_date_matricule.value, end_date_matricule.value);
+                    total_days += duration_value;
+
+                    start_date_matricule.value = "";
+                    duration_matricule.value = "";
+                    end_date_matricule.value = "";
+                    reprise_matricule.value = "";
+                    type_matricule.value = "";
+                    break;
+
+                case "missing":
+                    if (reprise_matricule.value === "") {
+                        alert('Please enter a date for the come back');
+                        return;
+                    }
+
+                    let date = new Date(reprise_matricule.value);
+
+                    if (date.getTime() <= new Date(end_date_matricule.value).getTime()) {
+                        alert('Invalid date');
+                        return;
+                    }
+
+                    updateDuration(start_date_matricule.value, end_date_matricule.value);
+
+                    // reset input fields + update date start
+
+                    start_date_matricule.value = reprise_matricule.value;
+                    end_date_matricule.value = "";
+                    duration_matricule.value = "";
+                    reprise_matricule.value = "";
+                    type_matricule.value = "";
+
+                    break;
+
+                default:
+                    updateDuration(start_date_matricule.value, end_date_matricule.value);
+                    start_date_matricule.value = reprise_matricule.value;
+                    end_date_matricule.value = "";
+                    duration_matricule.value = "";
+                    reprise_matricule.value = "";
+                    type_matricule.value = "";
+                    break;
+            }
+            refreshDataMatricule();
+
+            start_date_matricule.classList.remove("good");
+            end_date_matricule.classList.remove("good");
+        });
+
+        calcul_btn_matricule.addEventListener('click', () => {
+            alert("Jours : " + total_days + " Mois : " + total_months + " Ans : " + total_years);
+        });
+
+        reset_btn_matricule.addEventListener('click', () => {
+            inputs_matricule = [];
+            total_days = 0;
+            total_months = 0;
+            total_years = 0;
+
+            start_date_matricule.value = "";
+            end_date_matricule.value = "";
+            type_matricule.value = "";
+            duration_matricule.value = "";
+            reprise_matricule.value = "";
+
+            refreshDataMatricule();
+        });
+
+        start_date_matricule.addEventListener("change", (e) => {
+
+        if (start_date_matricule.value === "" || end_date_matricule.value === "") {
+            start_date_matricule.classList.remove("good");
+            end_date_matricule.classList.remove("good");
+            start_date_matricule.classList.remove("false");
+            end_date_matricule.classList.remove("false");
+            return;
+        }
+
+        if (new Date(end_date_matricule.value).getTime() < new Date(start_date_matricule.value).getTime()) {
+            start_date_matricule.classList.add("false");
+            end_date_matricule.classList.add("false");
+            start_date_matricule.classList.remove("good");
+            end_date_matricule.classList.remove("good");
+        } else {
+            start_date_matricule.classList.remove("false");
+            end_date_matricule.classList.remove("false");
+            start_date_matricule.classList.add("good");
+            end_date_matricule.classList.add("good");
+        }
+        });
+
+        end_date_matricule.addEventListener("change", (e) => {
+        
+        if (start_date_matricule.value === "" || end_date_matricule.value === "") {
+            start_date_matricule.classList.remove("good");
+            end_date_matricule.classList.remove("good");
+            start_date_matricule.classList.remove("false");
+            end_date_matricule.classList.remove("false");
+            return;
+        }
+
+        if (new Date(end_date_matricule.value).getTime() < new Date(start_date_matricule.value).getTime()) {
+            start_date_matricule.classList.add("false");
+            end_date_matricule.classList.add("false");
+            start_date_matricule.classList.remove("good");
+            end_date_matricule.classList.remove("good");
+        } else {
+            start_date_matricule.classList.remove("false");
+            end_date_matricule.classList.remove("false");
+            start_date_matricule.classList.add("good");
+            end_date_matricule.classList.add("good");
+        }
+        });
+        
+        function updateDuration(date1, date2) {
+            
+            //calculate duration
+            days = new Date(date2).getDate() - new Date(date1).getDate(); // days
+            months = new Date(date2).getMonth() - new Date(date1).getMonth(); // months
+            years = new Date(date2).getFullYear() - new Date(date1).getFullYear(); // years
+
+            total_days += days;
+            total_months += months;
+            total_years += years;
+
+            // process totals
+            processTotals();
+
+            // add input to the array
+            mat = new MatriculeInput(date1, date2, type_matricule.value, duration_matricule.value, reprise_matricule.value);
+            inputs_matricule.unshift(mat);
+        }
+
+        // custom date functions
+
+        function isYearBissextile(date) {
+            if (date.getFullYear()%4 === 0 || date.getFullYear()%100 === 0 && date.getFullYear()%400 === 0) {
+                return true;
+            }
+            return false;
+        }
+
+        function endMonth(date) {
+            let d = new Date();
+
+            if (date.getDate() === 1 && date.getMonth() !== 12) {
+                d.setDate(1);
+                d.setMonth(date.getMonth() + 1);
+                d.setFullYear(date.getFullYear());
+                return {
+                    date: d,
+                    value: 30
+                };
+            } else if (date.getDate() === 1 && date.getMonth() === 12) {
+                d.setDate(1);
+                d.setMonth(1-1);
+                d.setFullYear(date.getFullYear() + 1);
+                return {
+                    date: d,
+                    value: 30
+                };
+            }
+
+            switch (date.getMonth()) {
+                case 1:
+                    d.setDate(1);
+                    d.setMonth(3-1);
+                    d.setFullYear(date.getFullYear());
+
+                    if (date.getDate() === 28 || date.getDate() === 29 && isYearBissextile(date)) {
+                        return {date: d, value: 1}
+                    }
+
+                    if (isYearBissextile(date)) {
+                        return {date: d, value: 29 - date.getDate()+ 1}
+                    }
+
+                    return {
+                        date: d,
+                        value: 28 - date.getDate() + 1
+                    };                
+                case 3:
+                case 5:
+                case 8:
+                case 10:
+                    d.setDate(1);
+                    d.setMonth(date.getMonth() + 1);
+                    d.setFullYear(date.getFullYear());
+                    return {
+                        date: d,
+                        value: 30 - date.getDate() + 1
+                    };
+                
+                case 0:
+                case 2:
+                case 4:
+                case 6:
+                case 7:
+                case 9:
+                    d.setDate(1);
+                    d.setMonth(date.getMonth() + 1);
+                    d.setFullYear(date.getFullYear());
+                    return {
+                        date: d,
+                        value: 31 - date.getDate() + 1
+                    };
+                
+                case 11:
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        function processTotals() {
+            while (total_days >= 30) {
+                total_days -= 30;
+                total_months += 1;
+            }
+            while (total_months >= 12) {
+                total_months -= 12;
+                total_years += 1;
+            }
+
+        }
+
+        function subInterval(start, end, flag) {
+            let days = 0;
+            let months = 0;
+            let years = 0;
+
+            days--;
+
+            start = new Date(start);
+            end = new Date(end);
+
+            if (start.getFullYear() === end.getFullYear()) {
+                if (start.getMonth() === end.getMonth()) {
+                    switch (start.getMonth()) {
+                        case 1:
+                            if (isYearBissextile(start) && start.getDate() === 1 && end.getDate() === 29) {
+                                days += 30;
+                            } else if (start.getDate() === 1 && end.getDate() === 28) {
+                                days += 30;
+                            } else {
+                                if (start.getDate() < end.getDate()) {
+                                    days += (end.getDate() - start.getDate() + 1);
+                                } else if (start.getDate() === end.getDate()) {
+                                    days += 0;
+                                } else {
+                                    // reset
+                                    alert("need to reset all");
+                                }
+                            }
+                            break;          
+                        
+                        case 3:
+                        case 5:
+                        case 8:
+                        case 10:
+                            if (start.getDate() < end.getDate()) {
+                                days += (end.getDate() - start.getDate() + 1);
+                            } else if (start.getDate() === end.getDate()) {
+                                days += 0;
+                            } else {
+                                // reset
+                                alert("need to reset all");
+                            }
+                            break;
+
+                        case 0:
+                        case 2:
+                        case 4:
+                        case 6:
+                        case 7:
+                        case 9:
+                        case 11:
+                            if (start.getDate() === 1 && end.getDate() === 31) {
+                                days += 30;
+                            } else {
+                                if (start.getDate() < end.getDate()) {
+                                    days += (end.getDate() - start.getDate() + 1); 
+                                } else if (start.getDate() === end.getDate()) {
+                                    days += 0;
+                                } else {
+                                    // reset
+                                    alert("need to reset all");
+                                }
+                            }
+                            break;
+
+                        default:
+                            break;
+                    }
+                } else if (start.getMonth() < end.getMonth()) {
+                    res = endMonth(start);
+                    days += (res.value + end.getDate());
+                    months += (end.getMonth() - res.date.getMonth());
+                } else {
+                    // reset
+                    alert("need to reset all");
+                }
+            } else if (start.getFullYear() < end.getFullYear()) {
+                res = endMonth(start);
+
+                switch (end.getMonth()) {
+                    case 1:
+                        if (end.getDate() === 29 && isYearBissextile(end)) {
+                            days += (30 + res.value);
+                        } else if (end.getDate() === 28 && !isYearBissextile(end)) {
+                            days += (30 + res.value);
+                        } else {
+                            days += (res.value + end.getDate());
+                        }
+                        break;
+                    
+                    case 0:
+                    case 2:
+                    case 4:
+                    case 6:
+                    case 7:
+                    case 9:
+                    case 11:
+                        if (end.getDate() === 31) {
+                            days += (30 + res.value);
+                        } else {
+                            days += (res.value + end.getDate());
+                        }
+                        break;
+                
+                    default:
+                        days += (res.value + end.getDate());
+                        break;
+                }
+
+                months += (12 - new Date(res.date).getMonth() + end.getMonth());
+                years += (end.getFullYear() - new Date(res.date).getFullYear() - 1);
+            }
+
+            total_days += days;
+            total_months += months;
+            total_years += years;
+
+            processTotals();
+
+            return {
+                start: start,
+                end: end,
+                days: days,
+                months: months,
+                years: years,
+            }
+        }
+
+        function addInterval(start, end, interruptionType) {
+            let days = new Date(end).getDate();
+            let months = new Date(end).getMonth();
+            let years = new Date(end).getFullYear();
+
+            start = new Date(start);
+            end = new Date(end);
+
+            if (days !== 0) {
+                switch (start.getMonth()) {
+                    case 1:
+                        if (isYearBissextile(start)) {
+                            if (start.getDate() + days < 29) {
+                                start.setDate(start.getDate() + days);
+                            } else if (start.getDate() + days === 29) {
+                                start.setDate(1);
+                                months++;
+                            } else {
+                                let daysLeft = 29 - start.getDate();
+                                dayNextMonth = days - daysLeft;
+                                start.setDate(dayNextMonth);
+                                months++;
+                            }
+                        } else {
+                            if (start.getDate() + days < 28) {
+                                start.setDate(start.getDate() + days);
+                            } else if (start.getDate() + days === 28) {
+                                start.setDate(1);
+                                months++;
+                            } else {
+                                let daysLeft = 28 - start.getDate();
+                                dayNextMonth = days - daysLeft;
+                                start.setDate(dayNextMonth);
+                                months++;
+                            }
+                        }
+                        break;
+                    
+                    case 3:
+                    case 5:
+                    case 8:
+                    case 10:
+                        if (start.getDate() + days < 30) {
+                            start.setDate(start.getDate() + days);
+                        } else if (start.getDate() + days === 30) {
+                            start.setDate(1);
+                            months++;
+                        } else {
+                            let daysLeft = 30 - start.getDate();
+                            dayNextMonth = days - daysLeft;
+                            start.setDate(dayNextMonth);
+                            months++;
+                        }
+                        break;
+                    
+                    case 0:
+                    case 2:
+                    case 4:
+                    case 6:
+                    case 7:
+                    case 9: 
+                        if (start.getDate() + days < 31) {
+                            start.setDate(start.getDate() + days);
+                        } else if (start.getDate() + days === 31) {
+                            start.setDate(1);
+                            months++;
+                        } else {
+                            let daysLeft = 31 - start.getDate();
+                            dayNextMonth = days - daysLeft;
+                            start.setDate(dayNextMonth);
+                            months++;
+                        }
+                    default:
+                        if (start.getDate() + days < 31) {
+                            start.setDate(start.getDate() + days);
+                        } else if (start.getDate() + days === 31) {
+                            start.setDate(1);
+                            start.setMonth(0);
+                            start.setFullYear(start.getFullYear() + 1);
+                        } else {
+                            let daysLeft = 31 - start.getDate();
+                            dayNextMonth = days - daysLeft;
+                            start.setDate(dayNextMonth);
+                            start.setMonth(0);
+                            start.setFullYear(start.getFullYear() + 1);
+                        }
+                        break;
+                }
+            }
+            if (months != 0) {
+                start.setMonth(start.getMonth() + months);
+                while (start.getMonth() > 12) {
+                    start.setMonth(start.getMonth() - 12);
+                    years++;
+                }
+            }
+            if (years !== 0) {
+                start.setFullYear(start.getFullYear() + years);
+            }
+
+            if (interruptionType === "rtems50") {
+                return {
+                    start: start,
+                    end: end,
+                    value: (days + months*30 + years*12*30) / 2
+                }
+            }
+
+            return {
+                start: start,
+                end: end,
+                value: 0
+            }
+        }
+
+        function MatriculeInput(ds, de, type, du = 0, ddu) {
+            this.key = Date.now();
+            this.date_start = ds;
+            this.date_end = de;
+            this.type = type;
+            this.duration = du;
+            this.date_duration = ddu;
+        }
+
+        function refreshDataMatricule() {
+            data_field.innerHTML = "";
+            inputs_matricule.forEach((mat, index) => {
+                data_field.innerHTML += `
+                <div class="ams-input" style="padding:5px 0; display:flex; flex-direction:row; justify-content: space-between;">
+                    <div style="margin-left: 5px;">${inputs_matricule.length - index}</div>
+                    <div style="margin-left: 5px;">${mat.type}</div>
+                    <div>D: ${dateToString(mat.date_start)}   </div>       
+                    <div>F: ${dateToString(mat.date_end)}</div>
+                    <div>${mat.duration++ === 0 ? "" : mat.duration + " jours" }</div>
+                    <div>${mat.date_duration === "" ? "" : dateToString(mat.date_duration)}</div>
+                    <button onClick="onDeleteMat(${mat.key})">Supprimer</button>
+                </div>`;
+            })
+        }
+
+        function onDeleteMat(key) {
+            inputs_matricule = inputs_matricule.filter(mat => mat.key !== key);
+            refreshDataMatricule();
+        }
+
+    </script>
+</body>
+</html>
