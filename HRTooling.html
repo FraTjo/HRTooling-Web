@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap');
+        :root {
+            --main-color: rgba(100, 7, 239, 1);
+            --main-color-fade : rgba(100, 7, 239, 0.3);
+        }
+        
         * {
             padding: 0;
             margin: 0;
@@ -28,7 +33,7 @@
             transform: translate(-50%, -50%);
             
             border-radius: 25px;
-            box-shadow: 0px 0px 10px 3px rgba(100, 7, 239, 0.3);
+            box-shadow: 0px 0px 10px 3px var(--main-color-fade);
             
             display: flex;
             flex-direction: column;
@@ -43,7 +48,7 @@
         
         hr {
             height: 1px;
-            background-color: rgba(100, 7, 239, 1);
+            background-color: var(--main-color);
             border: none;
             border-radius: 7px;
             margin-bottom: 5px;
@@ -67,12 +72,12 @@
         }
         
         .tab-btn:hover {
-            background-color: rgba(100, 7, 239, 1);
+            background-color: var(--main-color);
             color: #fff;
         }
         
         .active {
-            color: rgba(100, 7, 239, 1);
+            color: rvar(--main-color); 
         }
         
         .tab-content {
@@ -95,7 +100,7 @@
         }
         
         span {
-            color: rgba(100, 7, 239, 1);
+            color: var(--main-color);
         }
         
         p {
@@ -187,7 +192,7 @@
         }
 
         .menu input[type="date"]:hover {
-            color: rgba(100, 7, 239, 1);
+            color: var(--main-color);
         }
 
         .false {
@@ -210,25 +215,25 @@
 
         .ams-input:nth-child(even) {
             background-color: rgb(222, 222, 222);
-            color: rgba(100, 7, 239, 1);
+            color: var(--main-color);
         }
 
         #input .ams-input button {
             background-color: rgba(0, 0, 0, 0);
             border: none;
-            color: rgba(100, 7, 239, 1);
+            color: var(--main-color);
             padding: 0 10px;
             margin: 0 5px;
         }
 
         #input .ams-input button:hover {
             color: #fff;
-            background-color: rgba(100, 7, 239, 1);
+            background-color: var(--main-color);
             border-radius: 15px;
         }
 
         input[type="button"]:hover {
-            background-color: rgba(100, 7, 239, 1);
+            background-color: var(--main-color);
             color: #fff;
         }
 
@@ -244,7 +249,7 @@
         }
 
         select:hover{
-            color: rgba(100, 7, 239, 1);
+            color: var(--main-color);
         }
 
         select:focus {
@@ -256,11 +261,11 @@
         }
 
         input[type="number"]:hover {
-            color: rgba(100, 7, 239, 1);
+            color: var(--main-color);
         }
 
         input[type="number"]:focus {
-            outline-color: rgba(100, 7, 239, 1);
+            outline-color: var(--main-color);
         }
 
     </style>
