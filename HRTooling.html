@@ -917,9 +917,10 @@
                     }
 
                     updateDuration(start_date_matricule.value, end_date_matricule.value);
-                    total_days += duration_value;
 
-                    start_date_matricule.value = "";
+                    newStart = addInterval(end_date_matricule.value, duration_value, type_matricule.value).start;
+
+                    start_date_matricule.value = newStart.toISOString().substring(0,10);
                     end_date_matricule.value = "";
                     duration_matricule.value = "";
                     reprise_matricule.value = "";
@@ -940,10 +941,11 @@
                     }
 
                     updateDuration(start_date_matricule.value, end_date_matricule.value);
-                    total_days += duration_value;
+                    total_days += duration_value / 2;
 
-                    start_date_matricule.value = "";
-                    duration_matricule.value = "";
+                    newStart = addInterval(end_date_matricule.value, duration_value, type_matricule.value).start;
+
+                    start_date_matricule.value = newStart.toISOString().substring(0,10);duration_matricule.value = "";
                     end_date_matricule.value = "";
                     reprise_matricule.value = "";
                     type_matricule.value = "";
@@ -990,7 +992,7 @@
         });
 
         calcul_btn_matricule.addEventListener('click', () => {
-            alert("Jours : " + total_days + " Mois : " + total_months + " Ans : " + total_years);
+            alert("Jours : " + total_days + " - Mois : " + total_months + " - Ans : " + total_years);
         });
 
         reset_btn_matricule.addEventListener('click', () => {
@@ -1057,19 +1059,19 @@
         function updateDuration(date1, date2) {
             
             //calculate duration
-            days = new Date(date2).getDate() - new Date(date1).getDate(); // days
-            months = new Date(date2).getMonth() - new Date(date1).getMonth(); // months
-            years = new Date(date2).getFullYear() - new Date(date1).getFullYear(); // years
+            res = subInterval(date1, date2, type_matricule.value);
 
-            total_days += days;
-            total_months += months;
-            total_years += years;
+            total_days += res.days;
+            total_months += res.months;
+            total_years += res.years;
 
             // process totals
             processTotals();
 
             // add input to the array
-            mat = new MatriculeInput(date1, date2, type_matricule.value, duration_matricule.value, reprise_matricule.value);
+            mat = new MatriculeInput(date1, date2, type_matricule.value,
+                                    (type_matricule.value === "rtems50" ? duration_matricule.value/2 : duration_matricule.value),
+                                    reprise_matricule.value);
             inputs_matricule.unshift(mat);
         }
 
@@ -1280,12 +1282,6 @@
                 years += (end.getFullYear() - new Date(res.date).getFullYear() - 1);
             }
 
-            total_days += days;
-            total_months += months;
-            total_years += years;
-
-            processTotals();
-
             return {
                 start: start,
                 end: end,
@@ -1295,13 +1291,23 @@
             }
         }
 
-        function addInterval(start, end, interruptionType) {
-            let days = new Date(end).getDate();
-            let months = new Date(end).getMonth();
-            let years = new Date(end).getFullYear();
+        function addInterval(start, duration, interruptionType) {
+            let days = duration
+            
+            let months = 0
+            while (days >= 30) {
+                days -= 30;
+                months++
+            }
+            
+            let years = 0;
+            while (months >= 12) {
+                months -= 12;
+                years++
+            }
+
 
             start = new Date(start);
-            end = new Date(end);
 
             if (days !== 0) {
                 switch (start.getMonth()) {
@@ -1367,6 +1373,7 @@
                             start.setDate(dayNextMonth);
                             months++;
                         }
+                        break; 
                     default:
                         if (start.getDate() + days < 31) {
                             start.setDate(start.getDate() + days);
@@ -1398,14 +1405,12 @@
             if (interruptionType === "rtems50") {
                 return {
                     start: start,
-                    end: end,
                     value: (days + months*30 + years*12*30) / 2
                 }
             }
 
             return {
                 start: start,
-                end: end,
                 value: 0
             }
         }
@@ -1428,8 +1433,8 @@
                     <div style="margin-left: 5px;">${mat.type}</div>
                     <div>D: ${dateToString(mat.date_start)}   </div>       
                     <div>F: ${dateToString(mat.date_end)}</div>
-                    <div>${mat.duration++ === 0 ? "" : mat.duration + " jours" }</div>
-                    <div>${mat.date_duration === "" ? "" : dateToString(mat.date_duration)}</div>
+                    <div>${parseInt(mat.duration) === 0 ? "Null" : mat.duration + " jours" }</div>
+                    <div>${mat.date_duration === "" ? "Null" : dateToString(mat.date_duration)}</div>
                     <button onClick="onDeleteMat(${mat.key})">Supprimer</button>
                 </div>`;
             })
